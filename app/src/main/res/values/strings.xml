@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Tets</string>
+    <string name="title_item_detail">Item Detail</string>
+    <string name="idItem">Ingresa ID: </string>
+    <string name="btnGuardar">Guardar</string>
+    <string name="btnCancelar">Cancelar</string>
+    <string name="addApellido">Etiquetas, por ej: #hola #buendia</string>
+    <string name="rBtnRegistrar">Registrar</string>
+    <string name="rBtnLimpiar">Limpiar</string>
+    <string name="rNombre">Nombre: </string>
+    <string name="rPass">Password: </string>
+    <string name="rNpass">Repetir Password</string>
+    <string name="passDif">Passwords no coinciden</string>
+    <string name="nulos">No se admiten campos nulos</string>
+    <string name="usuario">Ya esta registrado ese usuario</string>
+    <string name="lNombre">Ingrese Nombre:</string>
+    <string name="lPass">Contraseña: </string>
+    <string name="lBtnLogin">Login</string>
+    <string name="Login">Login</string>
+    <string name="idint">Campo id admite solo enteros!!!!</string>
+</resources>
