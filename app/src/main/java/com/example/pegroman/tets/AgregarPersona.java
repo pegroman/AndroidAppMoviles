@@ -107,15 +107,26 @@ public class AgregarPersona extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         NavUtils.navigateUpTo(AgregarPersona.this, new Intent(AgregarPersona.this, ItemListActivity.class));
+        recreate();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Bitmap bp = (Bitmap) data.getExtras().get("data");
-        image.setImageBitmap(bp);
-        Date date = new Date();
-        sdf= new SimpleDateFormat("dd/MM/yyyy");
-        fecha.setText(sdf.format(date));
-        this.sacarLocalidad();
+        if (resultCode == RESULT_CANCELED){
+            NavUtils.navigateUpTo(AgregarPersona.this, new Intent(AgregarPersona.this, ItemListActivity.class));
+        }else {
+            Bitmap bp = (Bitmap) data.getExtras().get("data");
+            image.setImageBitmap(bp);
+            Date date = new Date();
+            sdf= new SimpleDateFormat("dd/MM/yyyy");
+            fecha.setText(sdf.format(date));
+            this.sacarLocalidad();
+        }
     }
 
     public void sacarLocalidad() {
