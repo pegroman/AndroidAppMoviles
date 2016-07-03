@@ -41,7 +41,7 @@ import java.util.Map;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class ItemListActivity extends AppCompatActivity {
+public class ItemListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -94,6 +94,12 @@ public class ItemListActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.item_list_activity_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(this);
+        MenuItemCompat.setOnActionExpandListener(searchItem, this);
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -115,6 +121,38 @@ public class ItemListActivity extends AppCompatActivity {
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(ITEMS));
+    }
+
+    @Override
+    public boolean onMenuItemActionExpand(MenuItem item) {
+        return true;
+    }
+
+    @Override
+    public boolean onMenuItemActionCollapse(MenuItem item) {
+        cargarItems();
+        View recyclerView = findViewById(R.id.item_list);
+        assert recyclerView != null;
+        setupRecyclerView((RecyclerView) recyclerView);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        cargarItems2(query);
+        if (ItemListActivity.ITEMS.isEmpty()){
+            Toast.makeText(this,getBaseContext().getString(R.string.sinResultados), Toast.LENGTH_SHORT).show();
+            cargarItems();
+        }
+        View recyclerView = findViewById(R.id.item_list);
+        assert recyclerView != null;
+        setupRecyclerView((RecyclerView) recyclerView);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 
     public class SimpleItemRecyclerViewAdapter
@@ -241,6 +279,23 @@ public class ItemListActivity extends AppCompatActivity {
         ItemListActivity.ITEMS.clear();
         db=helper.open();
         String consulta="SELECT * from Item";
+        Cursor fila = db.rawQuery(consulta,null);
+        if (fila !=null) {
+            fila.moveToFirst();
+            for (int i = 0; i < fila.getCount(); i++) {
+                addItem(createDummyItem(fila.getInt(0),fila.getString(1),fila.getString(2),fila.getBlob(3),fila.getString(4)));
+                fila.moveToNext();
+            }
+            fila.close();
+        }
+        helper.close();
+    }
+
+    public void cargarItems2(String busqueda){
+        ItemListActivity.ITEMS.clear();
+        db=helper.open();
+        String consulta="SELECT * FROM Item WHERE "+
+                "(nombre like '%" + busqueda+ "%')";
         Cursor fila = db.rawQuery(consulta,null);
         if (fila !=null) {
             fila.moveToFirst();

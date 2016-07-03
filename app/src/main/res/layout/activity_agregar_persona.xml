@@ -70,6 +70,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/idItem"
         android:layout_below="@+id/addNombre"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:inputType="number"/>
 
 </RelativeLayout>

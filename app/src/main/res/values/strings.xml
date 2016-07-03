@@ -20,4 +20,5 @@
     <string name="idint">Campo id admite solo enteros!!!!</string>
     <string name="cerrarSesion">Salir</string>
     <string name="Buscar">Buscar</string>
+    <string name="sinResultados">No se encontraron resultados!!!</string>
 </resources>
