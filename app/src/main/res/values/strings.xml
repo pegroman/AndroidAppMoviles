@@ -21,4 +21,9 @@
     <string name="cerrarSesion">Salir</string>
     <string name="Buscar">Buscar</string>
     <string name="sinResultados">No se encontraron resultados!!!</string>
+    <string name="Idioma">Idioma</string>
+    <string name="espaniol">Español</string>
+    <string name="ingles">Ingles</string>
+    <string name="idiomaDesc">Configuración del idioma</string>
+    <string name="indiPais">Indicar Pais</string>
 </resources>

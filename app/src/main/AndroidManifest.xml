@@ -17,8 +17,7 @@
         <activity
             android:name=".ItemListActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ItemDetailActivity"
             android:label="@string/title_item_detail"
@@ -32,10 +31,14 @@
         <activity android:name=".Register">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login"/>
+        <activity android:name=".Login" />
+        <activity android:name=".PreferenciasActividad"
+            android:label="@string/app_name">
+        </activity>
     </application>
 
 </manifest>

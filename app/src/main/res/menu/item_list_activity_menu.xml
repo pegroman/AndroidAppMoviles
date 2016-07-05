@@ -17,4 +17,10 @@
         android:title="@string/cerrarSesion"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_languaje"
+        app:showAsAction="never"
+        android:title="@string/Idioma" />
+
+
 </menu>
