@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tets</string>
+    <string name="Idioma" translatable="false">Language</string>
+    <string name="Buscar">Search</string>
+    <string name="Login">Login</string>
+    <string name="addApellido">Tags, eg: #hello</string>
+    <string name="btnCancelar">Cancel</string>
+    <string name="btnGuardar">Save</string>
+    <string name="cerrarSesion">Exit</string>
+    <string name="espaniol">Spanish</string>
+    <string name="idItem">Input ID: </string>
+    <string name="idint">ID field only admit integers</string>
+    <string name="idiomaDesc">Setup language</string>
+    <string name="indiPais">Country</string>
+    <string name="ingles">English</string>
+    <string name="lBtnLogin">Login</string>
+    <string name="lNombre">Input Name: </string>
+    <string name="lPass">Password: </string>
+    <string name="nulos">Not admir empety fields</string>
+    <string name="passDif">Password dont match</string>
+    <string name="rBtnLimpiar">Clean</string>
+    <string name="rBtnRegistrar">Register</string>
+    <string name="rNombre">Name: </string>
+    <string name="rNpass">Repeat Password: </string>
+    <string name="rPass">Password: </string>
+    <string name="sinResultados">Dont found results!!!</string>
+    <string name="title_item_detail">Item Detail</string>
+    <string name="usuario">Username already exists</string>
+</resources>

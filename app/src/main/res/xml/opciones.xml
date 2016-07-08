@@ -2,11 +2,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/Idioma">
         <ListPreference
-            android:key="@string/Idioma"
+            android:key="Idioma"
             android:title="@string/Idioma"
             android:summary="@string/idiomaDesc"
             android:dialogTitle="@string/indiPais"
+            android:defaultValue="ESP"
             android:entries="@array/pais"
-            android:entryValues="@array/codigopais" />
+            android:entryValues="@array/codigopais"/>
     </PreferenceCategory>
 </PreferenceScreen>

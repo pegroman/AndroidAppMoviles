@@ -5,24 +5,21 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,9 +29,9 @@ import android.widget.Toast;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -56,7 +53,7 @@ public class ItemListActivity extends AppCompatActivity implements SearchView.On
     SQLiteDatabase db;
     public static final List<DummyItem> ITEMS = new ArrayList<>();
     public static final Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
-
+    private SharedPreferences idioma;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +66,7 @@ public class ItemListActivity extends AppCompatActivity implements SearchView.On
         assert toolbar != null;
         toolbar.setTitle(getTitle());
 
+        changeLang();
         cargarItems();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -93,6 +91,22 @@ public class ItemListActivity extends AppCompatActivity implements SearchView.On
             // activity should be in two-pane mode.
             mTwoPane = true;
         }
+    }
+
+    private void changeLang(){
+        SharedPreferences lang = getSharedPreferences("Lang",getBaseContext().MODE_PRIVATE);
+        String nuevoLang = lang.getString("lang","ESP");
+        Configuration config;
+        config = new Configuration(getResources().getConfiguration());
+        switch (nuevoLang){
+            case "ESP":
+                config.locale = new Locale("es");
+                break;
+            case "ENG":
+                config.locale = Locale.ENGLISH;
+                break;
+        }
+        this.getResources().updateConfiguration(config, getResources().getDisplayMetrics());
     }
 
     @Override
@@ -275,11 +289,10 @@ public class ItemListActivity extends AppCompatActivity implements SearchView.On
 
         }
 
-
         @Override
         public String toString() {
-                return content;
-            }
+            return content;
+        }
     }
 
     public void cargarItems(){
@@ -314,5 +327,4 @@ public class ItemListActivity extends AppCompatActivity implements SearchView.On
         }
         helper.close();
     }
-
 }
