@@ -27,4 +27,7 @@
     <string name="sinResultados">Dont found results!!!</string>
     <string name="title_item_detail">Item Detail</string>
     <string name="usuario">Username already exists</string>
+    <string name="Descargar">Download</string>
+    <string name="DescargarDesc">Download product image</string>
+    <string name="ErrorDown">Download failed. Try later </string>
 </resources>

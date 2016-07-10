@@ -26,4 +26,7 @@
     <string name="ingles">Ingles</string>
     <string name="idiomaDesc">Configuración del idioma</string>
     <string name="indiPais">Indicar Pais</string>
+    <string name="Descargar">Descargar</string>
+    <string name="DescargarDesc">Descargando foto del producto</string>
+    <string name="ErrorDown">Error al descargar. Intente mas tarde</string>
 </resources>

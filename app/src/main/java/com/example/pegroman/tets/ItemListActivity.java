@@ -1,7 +1,7 @@
 package com.example.pegroman.tets;
 
-import android.app.SearchManager;
-import android.content.ClipData;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,15 +11,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +32,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +61,6 @@ public class ItemListActivity extends AppCompatActivity implements SearchView.On
     SQLiteDatabase db;
     public static final List<DummyItem> ITEMS = new ArrayList<>();
     public static final Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
-    private SharedPreferences idioma;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -246,9 +253,65 @@ public class ItemListActivity extends AppCompatActivity implements SearchView.On
                 mImagen=(ImageView)view.findViewById(R.id.imagen);
                 mFecha=(TextView)view.findViewById(R.id.fecha);
                 //mNombre=(TextView)view.findViewById(R.id.nombre);
+                view.setOnCreateContextMenuListener(menuContextListener);
             }
 
-            @Override
+            private final View.OnCreateContextMenuListener menuContextListener = new View.OnCreateContextMenuListener() {
+                @Override
+                public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+                    if (mItem!= null) {
+                        MenuInflater inflater = getMenuInflater();
+                        inflater.inflate(R.menu.context, contextMenu);
+                        contextMenu.findItem(R.id.descargar).setOnMenuItemClickListener(downList);
+                    }
+                }
+            };
+
+            private final MenuItem.OnMenuItemClickListener downList = new MenuItem.OnMenuItemClickListener() {
+
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    try {
+                        String path= System.getenv("SECONDARY_STORAGE");
+                        //File sd = Environment.getExternalStorageDirectory();
+                        File directorio = new File("/mnt/sdcard/Producto");
+                        directorio.mkdirs();
+                        File image = new File(directorio, mItem.nombre+" "+mItem.id+".png");
+
+                        boolean success = false;
+                        FileOutputStream outStream;
+
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(mItem.foto, 0, mItem.foto.length);
+                        outStream = new FileOutputStream(image);
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+
+                        outStream.flush();
+                        outStream.close();
+                        success = true;
+
+                        if (success) {
+                            NotificationCompat.Builder mBuilder =
+                                    (NotificationCompat.Builder) new NotificationCompat.Builder(ItemListActivity.this)
+                                            .setSmallIcon(R.drawable.ic_download)
+                                            .setContentTitle(getBaseContext().getString(R.string.Descargar))
+                                            .setContentText(getBaseContext().getString(R.string.DescargarDesc))
+                                            .setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_SOUND);
+                            NotificationManager notificationManager = (NotificationManager) getBaseContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                            notificationManager.notify(1, mBuilder.build());
+                        } else {
+                            Toast.makeText(getApplicationContext(),
+                                    getBaseContext().getString(R.string.ErrorDown), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return false;
+                }
+            };
+
+                @Override
             public String toString() {
                 return super.toString() + " '" + mContentView.getText() + "'";
             }
